@@ -2,9 +2,9 @@ package main
 
 import (
 	"../lib/dbutil"
-	"../model/twit"
 	"./config"
 	"./util"
+	"github.com/ryokwkm/trends-model/twit"
 	"github.com/sirupsen/logrus"
 )
 

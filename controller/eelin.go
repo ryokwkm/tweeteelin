@@ -1,9 +1,9 @@
 package main
 
 import (
-	"../model/twit"
 	"github.com/jinzhu/gorm"
 	"github.com/kr/pretty"
+	"github.com/ryokwkm/trends-model/twit"
 	"github.com/sirupsen/logrus"
 )
 

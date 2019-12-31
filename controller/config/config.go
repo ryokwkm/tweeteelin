@@ -1,6 +1,6 @@
 package config
 
-import "../../model/twit"
+import "github.com/ryokwkm/trends-model/twit"
 import "../../lib/dbutil"
 
 const (
