@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/kr/pretty"
 	"github.com/ryokwkm/trends-model/twit"
 	"github.com/sirupsen/logrus"
 )
@@ -29,11 +28,19 @@ func (u EelinUsecase) Execute() {
 
 	targetUserID := int64(69249063) //えーりんのID
 	//tweets := getTweets(targetUserID)
-	sinceID := int64(0)
-	tweets := twit.GetTimeline(targetUserID, u.TwitterAuth, sinceID)
-	u.log.Info("tweets: %v", len(tweets))
-	tweetLogs := twit.StructATweetLogs(tweets)
-	tweetLogs.InsertByStruct(u.Db)
+	maxID := int64(0) //int64(1187241519784181760) - 1
+
+	for x := 0; x < 10; x++ {
+		tweets := twit.GetTimeline(targetUserID, u.TwitterAuth, maxID, 20)
+		if len(tweets) == 0 {
+			break
+		}
+		tweetLogs := twit.StructATweetLogs(tweets)
+		tweetLogs.InsertByStruct(u.Db)
+
+		maxID = tweets.GetFirstID() - 1
+		//u.log.Printf("%# v", pretty.Formatter(tweets))
+	}
 
 	//u.log.SetFormatter(&logrus.TextFormatter{
 	//	DisableColors: true,
@@ -41,8 +48,6 @@ func (u EelinUsecase) Execute() {
 
 	//u.log.SetFormatter(&logrus.JSONFormatter{})
 
-	u.log.Info(len(tweets))
-	u.log.Infof("tweets: %# v", pretty.Formatter(tweets))
 	//fmt.Printf(pretty.Formatter(tweets))
 
 	//

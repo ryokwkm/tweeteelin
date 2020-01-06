@@ -25,7 +25,9 @@ func main() {
 		users := twit.GetDebugUser(db)
 		for _, user := range users {
 			if twitterAuth, err := twit.GetTwitterUserAuth(db, user.Id); err == false {
-				EelinController(db, twitterAuth, user, log)
+				//EelinController(db, twitterAuth, user, log)
+				//AnalysisController(db, twitterAuth, user, log)
+				MarkovController(db, twitterAuth, user, log)
 			}
 		}
 	}
